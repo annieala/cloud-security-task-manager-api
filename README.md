@@ -1,4 +1,4 @@
-# Task Manager API - Cloud Security Lab
+# Task Manager API - Cloud Security
 
 A simple RESTful API built with Flask for managing to-do tasks with CRUD operations, containerized using Docker.
 
