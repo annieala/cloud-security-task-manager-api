@@ -1,0 +1,48 @@
+<!--
+    - Policies are applied in the order they appear.
+    - Position <base/> inside a section to inherit policies from the outer scope.
+    - Comments within policies are not preserved.
+-->
+<!-- Add policies as children to the <inbound>, <outbound>, <backend>, and <on-error> elements -->
+<policies>
+    <!-- Throttle, authorize, validate, cache, or transform the requests -->
+    <inbound>
+        <base />
+        <!-- Mock response for testing -->
+        <mock-response status-code="200" content-type="application/json" />
+        <!-- Rate limiting -->
+        <rate-limit calls="10" renewal-period="60" />
+        <!-- CORS policy -->
+        <cors allow-credentials="false">
+            <allowed-origins>
+                <origin>http://localhost:3000</origin>
+            </allowed-origins>
+            <allowed-methods>
+                <method>GET</method>
+                <method>POST</method>
+                <method>PUT</method>
+                <method>DELETE</method>
+            </allowed-methods>
+            <allowed-headers>
+                <header>*</header>
+            </allowed-headers>
+        </cors>
+        <!-- IP filtering -->
+        <ip-filter action="allow">
+            <address-range from="13.66.140.128" to="13.66.140.143" />
+            <address>13.66.201.169</address>
+        </ip-filter>
+    </inbound>
+    <!-- Control if and how the requests are forwarded to services  -->
+    <backend>
+        <base />
+    </backend>
+    <!-- Customize the responses -->
+    <outbound>
+        <base />
+    </outbound>
+    <!-- Handle exceptions and customize error responses  -->
+    <on-error>
+        <base />
+    </on-error>
+</policies>
